@@ -1,0 +1,425 @@
+
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html>
+
+<head>
+    <!-- viewport -->
+    
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta charset="utf-8">
+    <title id="titleNaming">7-ELEVEN ibon 便利生活站 - 門市查詢-網頁版</title>
+
+    <link href="css/pcstyle.css" rel="stylesheet" type="text/css">
+    <link href="css/font-awesome.min.css" rel="stylesheet">
+
+    <!-- jQuery -->
+    <script src="js/jquery-1.11.0.min.js"></script>
+    <script src="js/jquery-migrate-1.2.1.min.js"></script>
+    <script src="js/selectivizr-min.js"></script>
+    <script src="js/script.js"></script>
+    <script src="js/commonutil.js"></script>
+
+    <!-- 解決IE7~8看不懂html5的標籤 -->
+    <!--[if lt IE 9]>
+<script src="http://html5shim.googlecode.com/svn/trunk/html5.js">
+</script>
+<![endif]-->
+
+    <style>
+        .subContainer {
+            display: none;
+        }
+        /* 顯示檔案上傳相關*/
+        .maskFade
+        {
+        	cursor:pointer;
+	        display:none;
+	        position:absolute;
+	        width:100%;
+	        height:100%;
+	        background:#000000;
+	        z-index:10000000;
+	        top:0;
+	        left:0;
+	        opacity:0.6;
+	        filter:alpha(opacity=60);
+        }
+		.rounded-corners {
+            -moz-border-radius: 10px; /* Firefox */
+            -webkit-border-radius: 10px; /* Safari, Chrome */
+            -khtml-border-radius: 10px; /* Konqueror */
+            border-radius: 10px; /* Opera 10.50 and later (CSS3 standard) */
+            behavior: url(border-radius.htc); /* IE6, IE7, IE8 */
+        }
+        /*一般MASK*/
+        .mask
+        {
+            display: none;
+            position: absolute;
+            top: 0px;
+            left: 0px;
+            width:100%;
+            height:100%;
+            opacity: 0.6;
+            filter: alpha(opacity=60);
+            background-color: #000000;
+            z-index: 10000000; /*圖層需高於主選單,所有CSS最高為9999999*/
+        }
+        .banner a:link {
+            color: #5E5E5E;
+        }
+        /* visited link */
+        a:visited {
+            color: #5E5E5E;
+        }
+        /* selected link */
+        a:active {
+            color: #5E5E5E;
+        }
+        .banner a:hover{
+                color: #ABC31F; /* 當滑鼠經過時，超連結文字顏色變成指定顏色 */
+                position: relative; /* 當滑鼠經過超連結時，超連結往右下位移1像素 */
+                top: 1px;
+                left: 1px;
+                /*background-color:#FFFFFF;*/
+                font-size:large;
+                
+        }
+    </style>
+
+</head>
+
+<body>
+<form method="post" action="retail_inquiry.aspx" id="thisform" onsubmit="return getKeyword(&#39;retail_inquiry.aspx&#39;,&#39;請輸入關鍵字&#39;)">
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="/wEPDwUKLTcwNzE5MTA3OA9kFgQCAQ8WAh4JaW5uZXJodG1sBTY3LUVMRVZFTiBpYm9uIOS+v+WIqeeUn+a0u+ermSAtIOmWgOW4guafpeipoi3ntrLpoIHniYhkAgMPZBYGAgEPFgIeC18hSXRlbUNvdW50AgcWDmYPZBYEZg8VBAExEXBheW1lbnQuYXNweCNBMDQxDeWEsuWAvC/nubPosrsAZAIBDxYCHwECCBYQZg9kFgJmDxUCEXBheW1lbnQuYXNweCNBMDQxDOaUv+W6nOS7o+aUtmQCAQ9kFgJmDxUCEXBheW1lbnQuYXNweCNBMDExDOe3muS4iumBiuaIsmQCAg9kFgJmDxUCEnBheW1lbnQuYXNweCNBMDIxMQzpm7vkv6HmnI3li5lkAgMPZBYCZg8VAhFwYXltZW50LmFzcHgjQTA2MQzpioDooYzkv53pmqpkAgQPZBYCZg8VAhFwYXltZW50LmFzcHgjQTA4MV88c3BhbiBzdHlsZT0iZm9udC1zaXplOnNtYWxsO2NvbG9yOiM0MDNBM0E7IHRvcDowcHg7IGxlZnQ6MHB4OyI+5aSW57GN5bCI5Y2AKFBoaWxpcHBpLi4uPC9zcGFuPmQCBQ9kFgJmDxUCEHBheW1lbnQuYXNweCNBMDkM5pyJ57ea6Zu76KaWZAIGD2QWAmYPFQIQcGF5bWVudC5hc3B4I0EwMwzmlbjkvY3llYblk4FkAgcPZBYCZg8VAhBwYXltZW50LmFzcHgjQTA3DOaFiOWWhOaNkOasvmQCAQ9kFgRmDxUEATIPYm9udXMuYXNweCNCMDExDuWlveW6ty/ntIXliKkgAGQCAQ8WAh8BAggWEGYPZBYCZg8VAg9ib251cy5hc3B4I0IwMTEM5aW95bq35rS75YuVZAIBD2QWAmYPFQIPYm9udXMuYXNweCNCMDQxBumKgOihjGQCAg9kFgJmDxUCD2JvbnVzLmFzcHgjQjAzMRLpm7vlrZDnpajorYnmnIPlk6FkAgMPZBYCZg8VAg9ib251cy5hc3B4I0IwNjEc6Zu75L+hIOesrOS4ieaWueaUr+S7mOacg+WToWQCBA9kFgJmDxUCD2JvbnVzLmFzcHgjQjA4MQ3orYnliLgg5L+d6ZqqZAIFD2QWAmYPFQIPYm9udXMuYXNweCNCMDUxCeWKoOayueermWQCBg9kFgJmDxUCD2JvbnVzLmFzcHgjQjA3MRLntrLot6/pgYrmiLLmnIPlk6FkAgcPZBYCZg8VAg9ib251cy5hc3B4I0IwMjEY57SF5Yip6bue5pW45YWM5o+b6aCF55uuZAICD2QWBGYPFQQBMxpodHRwOi8vdGlja2V0Lmlib24uY29tLnR3LwznpajliLjkuK3lv4MAZAIBDxYCHwFmZAIDD2QWBGYPFQQBNBJzaG9wcGluZy5hc3B4I0MwNTEN6LO854mpL+WvhOiyqABkAgEPFgIfAQIGFgxmD2QWAmYPFQISc2hvcHBpbmcuYXNweCNDMDUxCeS6pOiyqOS+v2QCAQ9kFgJmDxUCEnNob3BwaW5nLmFzcHgjQzA2MQ/pu5HospPlroXmgKXkvr9kAgIPZBYCZg8VAhFzaG9wcGluZy5hc3B4I0MwMwzploDluILpoJDos7xkAgMPZBYCZg8VAhJzaG9wcGluZy5hc3B4I0MwMTEWaWJvbiBtYXJ0IOe3muS4iuizvOeJqWQCBA9kFgJmDxUCEXNob3BwaW5nLmFzcHgjQzAyDOmFkumhnuizvOeJqWQCBQ9kFgJmDxUCEXNob3BwaW5nLmFzcHgjQzA0GOmWgOW4gumgkOizvOWcsOWdgOafpeipomQCBA9kFgRmDxUEATUXcHJpbnRzY2FuX2llLmFzcHgjRDAxMTEN5YiX5Y2wL+aOg+aPjwBkAgEPFgIfAQIEFghmD2QWAmYPFQIXcHJpbnRzY2FuX2llLmFzcHgjRDAxMTET5YiX5Y2w5ZyW54mHL+aWh+S7tmQCAQ9kFgJmDxUCFXByaW50c2Nhbl9pZS5hc3B4I0QwMhLmtbfloLHliIblibLliJfljbBkAgIPZBYCZg8VAhZwcmludHNjYW5faWUuYXNweCNEMDYxGeWll+eJiOWIl+WNsC/mjojmrIrlnJblg49kAgMPZBYCZg8VAhdwcmludHNjYW5faWUuYXNweCNEMDUxMQbmjoPmj49kAgUPZBYEZg8VBAE2EXNlcnZpY2UuYXNweCNFMDQxDOeUs+i+puacjeWLmQBkAgEPFgIfAQIFFgpmD2QWAmYPFQIRc2VydmljZS5hc3B4I0UwNDEZ5pS/5bqcL+WtuOagoeS+v+awkeacjeWLmWQCAQ9kFgJmDxUCEXNlcnZpY2UuYXNweCNFMDMxDemHkeiejS/kv53pmqpkAgIPZBYCZg8VAhFzZXJ2aWNlLmFzcHgjRTAxMR9pYm9uIG1vYmlsZSjntbHkuIDotoXllYbpm7vkv6EpZAIDD2QWAmYPFQIRc2VydmljZS5hc3B4I0UwNTEM5buj5ZGK5YiK55m7ZAIED2QWAmYPFQIRc2VydmljZS5hc3B4I0UwMjEM5pyD5ZOh5pyN5YuZZAIGD2QWBGYPFQQBNw5saWZlLmFzcHgjRjAyMQznlJ/mtLvmnI3li5kTc3R5bGU9InJpZ2h0OiAwcHg7ImQCAQ8WAh8BAgYWDGYPZBYCZg8VAg5saWZlLmFzcHgjRjAyMQzpm7vlrZDnmbznpahkAgEPZBYCZg8VAg5saWZlLmFzcHgjRjA2MWo8c3BhbiBzdHlsZT0iZm9udC1zaXplOnNtYWxsO2NvbG9yOiM0MDNBM0E7IHRvcDowcHg7IGxlZnQ6MHB4OyI+aWNhc2ggLyDmgqDpgYrljaEgLyDkuIDljaHpgJrmn6XoqaI8L3NwYW4+ZAICD2QWAmYPFQIObGlmZS5hc3B4I0YwNDEM5Y+r6LuK5pyN5YuZZAIDD2QWAmYPFQINbGlmZS5hc3B4I0YwMRTmib7lt6XkvZwo5Yue5YuV6YOoKWQCBA9kFgJmDxUCDmxpZmUuYXNweCNGMDUxDOeUn+a0u+aDheWgsWQCBQ9kFgJmDxUCDmxpZmUuYXNweCNGMDMxEuWBpeW6t+eUn+a0u+izh+ioimQCAw8WAh8BAhcWLgIBD2QWAmYPFQMBMQnlj7DljJfluIIJ5Y+w5YyX5biCZAICD2QWAmYPFQMBMgnmlrDljJfluIIJ5paw5YyX5biCZAIDD2QWAmYPFQMBMwnln7rpmobluIIJ5Z+66ZqG5biCZAIED2QWAmYPFQMBNAnlrpzomK3nuKMJ5a6c6Jit57ijZAIFD2QWAmYPFQMBNQnmoYPlnJLluIIJ5qGD5ZyS5biCZAIGD2QWAmYPFQMBNgnmlrDnq7nluIIJ5paw56u55biCZAIHD2QWAmYPFQMBNwnmlrDnq7nnuKMJ5paw56u557ijZAIID2QWAmYPFQMBOAnoi5fmoJfnuKMJ6IuX5qCX57ijZAIJD2QWAmYPFQMBOQnlj7DkuK3luIIJ5Y+w5Lit5biCZAIKD2QWAmYPFQMCMTAJ5b2w5YyW57ijCeW9sOWMlue4o2QCCw9kFgJmDxUDAjExCeWNl+aKlee4ownljZfmipXnuKNkAgwPZBYCZg8VAwIxMgnpm7LmnpfnuKMJ6Zuy5p6X57ijZAIND2QWAmYPFQMCMTMJ5ZiJ576p5biCCeWYiee+qeW4gmQCDg9kFgJmDxUDAjE0CeWYiee+qee4ownlmInnvqnnuKNkAg8PZBYCZg8VAwIxNQnlj7DljZfluIIJ5Y+w5Y2X5biCZAIQD2QWAmYPFQMCMTYJ6auY6ZuE5biCCemrmOmbhOW4gmQCEQ9kFgJmDxUDAjE3CeWxj+adsee4ownlsY/mnbHnuKNkAhIPZBYCZg8VAwIxOAnoirHok67nuKMJ6Iqx6JOu57ijZAITD2QWAmYPFQMCMTkJ5Y+w5p2x57ijCeWPsOadsee4o2QCFA9kFgJmDxUDAjIwCea+jua5lue4ownmvo7muZbnuKNkAhUPZBYCZg8VAwIyMQnph5HploDnuKMJ6YeR6ZaA57ijZAIWD2QWAmYPFQMCMjIJ6YCj5rGf57ijCemAo+axn+e4o2QCFw9kFgJmDxUDAjIzDOWNl+a1t+iruOWztgzljZfmtbfoq7jls7ZkAgUPFgIfAQIMFhgCAQ9kFgJmDxUEAzEwMAnkuK3mraPljYADMTAwCeS4reato+WNgGQCAg9kFgJmDxUEAzEwMwnlpKflkIzljYADMTAzCeWkp+WQjOWNgGQCAw9kFgJmDxUEAzEwNAnkuK3lsbHljYADMTA0CeS4reWxseWNgGQCBA9kFgJmDxUEAzEwNQnmnb7lsbHljYADMTA1CeadvuWxseWNgGQCBQ9kFgJmDxUEAzEwNgnlpKflronljYADMTA2CeWkp+WuieWNgGQCBg9kFgJmDxUEAzEwOAnokKzoj6/ljYADMTA4CeiQrOiPr+WNgGQCBw9kFgJmDxUEAzExMAnkv6HnvqnljYADMTEwCeS/oee+qeWNgGQCCA9kFgJmDxUEAzExMQnlo6vmnpfljYADMTExCeWjq+ael+WNgGQCCQ9kFgJmDxUEAzExMgnljJfmipXljYADMTEyCeWMl+aKleWNgGQCCg9kFgJmDxUEAzExNAnlhafmuZbljYADMTE0CeWFp+a5luWNgGQCCw9kFgJmDxUEAzExNQnljZfmuK/ljYADMTE1CeWNl+a4r+WNgGQCDA9kFgJmDxUEAzExNgnmloflsbHljYADMTE2CeaWh+WxseWNgGRk+O1qlYTNc00ExVQPaNVxHNxNqxh6GE9Ir4LkIv3QKuQ=" />
+
+<div id="googlesearchbar" style="width:10px;height:10px;position:absolute;top:-100px;left:-100px;z-index:-100;">
+    <!--Google Search Binding-->
+    
+    <gcse:search></gcse:search>
+</div>
+    <!--wrapper Start-->
+    <div id="wrapper">
+        <!--header Start-->
+        <header>
+            <!--navContainer-->
+            <div class="navContainer">
+                <h1 class="logo"><a href="default.aspx">7-ELEVEN ibon 便利生活站 </a></h1>
+                <ul class="navlink">
+					<li><a href="about.aspx">關於ibon</a></li>
+					<li><a href="qa_atibon.aspx">常見問題</a></li>
+					<li><a href="sponsor.aspx">廠商合作提案</a></li>
+					<li><a href="retail_inquiry.aspx">門市查詢</a></li>
+                    <li class="bordernone"><a href="webmap.aspx">網站地圖</a></li>
+                    <li class="search">
+                    <input type="text" name="tt" id="keywords" class="searchbox" value="請輸入搜尋關鍵字" onfocus="cleartext(this)" onblur="resettext(this)"/><!--(先寫onfocus, 再寫onblur) -->
+                    <ul><li><a href="javascript: void(0)" onclick="getKeyword('retail_inquiry.aspx','請輸入搜尋關鍵字')">搜尋</a></li></ul>
+                    </li>
+                </ul>
+            </div>
+            <!--/navContainer-->
+
+            <!--mainmenu-->
+            <div class="mainmenu" style="position: relative; z-index:10;">
+                <div class="mainmenuContainer">
+                    <ul class="l1">
+                        
+                                <li class="m1">
+        	                        <a href="payment.aspx#A041">儲值/繳費</a>
+                                    <ul class="l2" >
+                                        
+                                                <li><a href="payment.aspx#A041">政府代收</a><span class="fa fa-angle-right"></span></li>
+                                            
+                                                <li><a href="payment.aspx#A011">線上遊戲</a><span class="fa fa-angle-right"></span></li>
+                                            
+                                                <li><a href="payment.aspx#A0211">電信服務</a><span class="fa fa-angle-right"></span></li>
+                                            
+                                                <li><a href="payment.aspx#A061">銀行保險</a><span class="fa fa-angle-right"></span></li>
+                                            
+                                                <li><a href="payment.aspx#A081"><span style="font-size:small;color:#403A3A; top:0px; left:0px;">外籍專區(Philippi...</span></a><span class="fa fa-angle-right"></span></li>
+                                            
+                                                <li><a href="payment.aspx#A09">有線電視</a><span class="fa fa-angle-right"></span></li>
+                                            
+                                                <li><a href="payment.aspx#A03">數位商品</a><span class="fa fa-angle-right"></span></li>
+                                            
+                                                <li><a href="payment.aspx#A07">慈善捐款</a><span class="fa fa-angle-right"></span></li>
+                                            
+                                    </ul>            
+                                </li>
+                            
+                                <li class="m2">
+        	                        <a href="bonus.aspx#B011">好康/紅利 </a>
+                                    <ul class="l2" >
+                                        
+                                                <li><a href="bonus.aspx#B011">好康活動</a><span class="fa fa-angle-right"></span></li>
+                                            
+                                                <li><a href="bonus.aspx#B041">銀行</a><span class="fa fa-angle-right"></span></li>
+                                            
+                                                <li><a href="bonus.aspx#B031">電子票證會員</a><span class="fa fa-angle-right"></span></li>
+                                            
+                                                <li><a href="bonus.aspx#B061">電信 第三方支付會員</a><span class="fa fa-angle-right"></span></li>
+                                            
+                                                <li><a href="bonus.aspx#B081">證券 保險</a><span class="fa fa-angle-right"></span></li>
+                                            
+                                                <li><a href="bonus.aspx#B051">加油站</a><span class="fa fa-angle-right"></span></li>
+                                            
+                                                <li><a href="bonus.aspx#B071">網路遊戲會員</a><span class="fa fa-angle-right"></span></li>
+                                            
+                                                <li><a href="bonus.aspx#B021">紅利點數兌換項目</a><span class="fa fa-angle-right"></span></li>
+                                            
+                                    </ul>            
+                                </li>
+                            
+                                <li class="m3">
+        	                        <a href="http://ticket.ibon.com.tw/">票券中心</a>
+                                    <ul class="l2" >
+                                        
+                                    </ul>            
+                                </li>
+                            
+                                <li class="m4">
+        	                        <a href="shopping.aspx#C051">購物/寄貨</a>
+                                    <ul class="l2" >
+                                        
+                                                <li><a href="shopping.aspx#C051">交貨便</a><span class="fa fa-angle-right"></span></li>
+                                            
+                                                <li><a href="shopping.aspx#C061">黑貓宅急便</a><span class="fa fa-angle-right"></span></li>
+                                            
+                                                <li><a href="shopping.aspx#C03">門市預購</a><span class="fa fa-angle-right"></span></li>
+                                            
+                                                <li><a href="shopping.aspx#C011">ibon mart 線上購物</a><span class="fa fa-angle-right"></span></li>
+                                            
+                                                <li><a href="shopping.aspx#C02">酒類購物</a><span class="fa fa-angle-right"></span></li>
+                                            
+                                                <li><a href="shopping.aspx#C04">門市預購地址查詢</a><span class="fa fa-angle-right"></span></li>
+                                            
+                                    </ul>            
+                                </li>
+                            
+                                <li class="m5">
+        	                        <a href="printscan_ie.aspx#D0111">列印/掃描</a>
+                                    <ul class="l2" >
+                                        
+                                                <li><a href="printscan_ie.aspx#D0111">列印圖片/文件</a><span class="fa fa-angle-right"></span></li>
+                                            
+                                                <li><a href="printscan_ie.aspx#D02">海報分割列印</a><span class="fa fa-angle-right"></span></li>
+                                            
+                                                <li><a href="printscan_ie.aspx#D061">套版列印/授權圖像</a><span class="fa fa-angle-right"></span></li>
+                                            
+                                                <li><a href="printscan_ie.aspx#D0511">掃描</a><span class="fa fa-angle-right"></span></li>
+                                            
+                                    </ul>            
+                                </li>
+                            
+                                <li class="m6">
+        	                        <a href="service.aspx#E041">申辦服務</a>
+                                    <ul class="l2" >
+                                        
+                                                <li><a href="service.aspx#E041">政府/學校便民服務</a><span class="fa fa-angle-right"></span></li>
+                                            
+                                                <li><a href="service.aspx#E031">金融/保險</a><span class="fa fa-angle-right"></span></li>
+                                            
+                                                <li><a href="service.aspx#E011">ibon mobile(統一超商電信)</a><span class="fa fa-angle-right"></span></li>
+                                            
+                                                <li><a href="service.aspx#E051">廣告刊登</a><span class="fa fa-angle-right"></span></li>
+                                            
+                                                <li><a href="service.aspx#E021">會員服務</a><span class="fa fa-angle-right"></span></li>
+                                            
+                                    </ul>            
+                                </li>
+                            
+                                <li class="m7">
+        	                        <a href="life.aspx#F021">生活服務</a>
+                                    <ul class="l2" style="right: 0px;">
+                                        
+                                                <li><a href="life.aspx#F021">電子發票</a><span class="fa fa-angle-right"></span></li>
+                                            
+                                                <li><a href="life.aspx#F061"><span style="font-size:small;color:#403A3A; top:0px; left:0px;">icash / 悠遊卡 / 一卡通查詢</span></a><span class="fa fa-angle-right"></span></li>
+                                            
+                                                <li><a href="life.aspx#F041">叫車服務</a><span class="fa fa-angle-right"></span></li>
+                                            
+                                                <li><a href="life.aspx#F01">找工作(勞動部)</a><span class="fa fa-angle-right"></span></li>
+                                            
+                                                <li><a href="life.aspx#F051">生活情報</a><span class="fa fa-angle-right"></span></li>
+                                            
+                                                <li><a href="life.aspx#F031">健康生活資訊</a><span class="fa fa-angle-right"></span></li>
+                                            
+                                    </ul>            
+                                </li>
+                            
+                    </ul>
+                </div>
+            </div>
+            <!--/mainmenu-->
+        </header>
+        <!--/header-->
+
+        <!--contentContainer-->
+        <div class="contentContainer">
+            <!--content-->
+            <div class="content">
+
+                <div class="mainArea" id="B011">
+
+                    <!--notabcontent-->                 
+                    <div class="mainContainer" style=" min-height:570px;">         
+                    
+                    <div class="searchmap" style="float:left; margin:0 10px 0 0; position:relative; background:url(image/map.gif) no-repeat; width:387px; height:555px; margin:15px 0 0 0;">
+                    <p style="left: 320px; top: 25px;" onclick="setCountyShortCut('基隆市')">基隆市</p>
+                    <p style="left: 265px; top: 28px;" onclick="setCountyShortCut('台北市')">台北市</p>
+                    <p style="left: 270px; top: 64px;" onclick="setCountyShortCut('新北市')">新北市</p>
+                    <p style="left: 210px; top: 45px;" onclick="setCountyShortCut('桃園市')">桃園市</p>
+                    <p style="left: 159px; top: 80px;" onclick="setCountyShortCut('新竹市')">新竹市</p>
+                    <p style="left: 210px; top: 87px;" onclick="setCountyShortCut('新竹縣')">新竹縣</p>
+                    <p style="left: 175px; top: 126px;" onclick="setCountyShortCut('苗栗縣')">苗栗縣</p>
+                    <p style="left: 155px; top: 170px;" onclick="setCountyShortCut('台中市')">台中市</p>
+                    <p style="left: 110px; top: 213px;" onclick="setCountyShortCut('彰化縣')">彰化縣</p>
+                    <p style="left: 106px; top: 255px;" onclick="setCountyShortCut('雲林縣')">雲林縣</p>
+                    <p style="left: 190px; top: 225px;" onclick="setCountyShortCut('南投縣')">南投縣</p>
+                    <p style="left: 75px; top: 300px;" onclick="setCountyShortCut('嘉義縣')">嘉義縣</p>
+                    <p style="left: 130px; top: 288px;" onclick="setCountyShortCut('嘉義市')">嘉義市</p>
+                    <p style="left: 95px; top: 344px;" onclick="setCountyShortCut('台南市')">台南市</p>
+                    <p style="left: 155px; top: 357px;" onclick="setCountyShortCut('高雄市')">高雄市</p>
+                    <p style="left: 145px; top: 414px;" onclick="setCountyShortCut('屏東縣')">屏東縣</p>
+                    <p style="left: 225px; top: 357px;" onclick="setCountyShortCut('台東縣')">台東縣</p>
+                    <p style="left: 265px; top: 221px;" onclick="setCountyShortCut('花蓮縣')">花蓮縣</p>
+                    <p style="left: 285px; top: 117px;" onclick="setCountyShortCut('宜蘭縣')">宜蘭縣</p> 
+                    <p style="left: 23px; top: 130px;" onclick="setCountyShortCut('連江縣')">連江縣</p>
+                    <p style="left: 11px; top: 225px;" onclick="setCountyShortCut('金門縣')">金門縣</p>
+                    <p style="left: 15px; top: 275px;" onclick="setCountyShortCut('澎湖縣')">澎湖縣</p>               
+                    </div>
+                    <div class="searchmain" style=" width:560px; margin:0 0 0 400px;">
+                    <table cellpadding="0" cellspacing="5" style="margin:0 0 0 10px; width:96%;">
+                      <tr>
+                          <td height="70" class="font16">請選擇欲查詢門市 : </td>
+                          <td height="70">
+                            
+                                    <select name="FirstClass" size="1" id="Class1" class="formstyle width170" onchange="getRetailArea('retail_inquiry_control.aspx', 'thisform', '1', '2', 2);">
+                                
+                                    <option value="1*台北市">台北市</option>
+                                
+                                    <option value="2*新北市">新北市</option>
+                                
+                                    <option value="3*基隆市">基隆市</option>
+                                
+                                    <option value="4*宜蘭縣">宜蘭縣</option>
+                                
+                                    <option value="5*桃園市">桃園市</option>
+                                
+                                    <option value="6*新竹市">新竹市</option>
+                                
+                                    <option value="7*新竹縣">新竹縣</option>
+                                
+                                    <option value="8*苗栗縣">苗栗縣</option>
+                                
+                                    <option value="9*台中市">台中市</option>
+                                
+                                    <option value="10*彰化縣">彰化縣</option>
+                                
+                                    <option value="11*南投縣">南投縣</option>
+                                
+                                    <option value="12*雲林縣">雲林縣</option>
+                                
+                                    <option value="13*嘉義市">嘉義市</option>
+                                
+                                    <option value="14*嘉義縣">嘉義縣</option>
+                                
+                                    <option value="15*台南市">台南市</option>
+                                
+                                    <option value="16*高雄市">高雄市</option>
+                                
+                                    <option value="17*屏東縣">屏東縣</option>
+                                
+                                    <option value="18*花蓮縣">花蓮縣</option>
+                                
+                                    <option value="19*台東縣">台東縣</option>
+                                
+                                    <option value="20*澎湖縣">澎湖縣</option>
+                                
+                                    <option value="21*金門縣">金門縣</option>
+                                
+                                    <option value="22*連江縣">連江縣</option>
+                                
+                                    <option value="23*南海諸島">南海諸島</option>
+                                </select>
+                          </td>
+                          <td height="70">
+                            
+                                    <select name="SecondClass" size="1" id="Class2" class="formstyle width170" onchange="getRetailArea('retail_inquiry_control.aspx', 'thisform', '2', '', 0);" style="visibility:visible;">
+                                        <option value="0">全部行政區</option>
+                                
+                                    <option value="100*中正區">( 100 ) 中正區</option>
+                                
+                                    <option value="103*大同區">( 103 ) 大同區</option>
+                                
+                                    <option value="104*中山區">( 104 ) 中山區</option>
+                                
+                                    <option value="105*松山區">( 105 ) 松山區</option>
+                                
+                                    <option value="106*大安區">( 106 ) 大安區</option>
+                                
+                                    <option value="108*萬華區">( 108 ) 萬華區</option>
+                                
+                                    <option value="110*信義區">( 110 ) 信義區</option>
+                                
+                                    <option value="111*士林區">( 111 ) 士林區</option>
+                                
+                                    <option value="112*北投區">( 112 ) 北投區</option>
+                                
+                                    <option value="114*內湖區">( 114 ) 內湖區</option>
+                                
+                                    <option value="115*南港區">( 115 ) 南港區</option>
+                                
+                                    <option value="116*文山區">( 116 ) 文山區</option>
+                                </select>
+                          </td>
+                      </tr>
+                      <tr>
+                        <td colspan="3" class="font16"><div class="line"></div></td>
+                      </tr>
+                      <tr>
+                        <td height="70" colspan="3" class="font16">
+                        地址: <input  value="可查地址、店號/店名、縣市/鄉鎮市區/郵遞區號" onfocus="cleartext(this)" 
+                        onblur="resettext(this)" type="text" name="txtKeyWords" 
+                        id="txtKeyWords" maxlength="50" onkeyup="undoBorderColor('txtKeyWords', true)" 
+                        class="formstyle width350" style="color:#7D7D7D;"/>
+                        <a href="javascript: void(0)" onclick="return SendProcess_Retail_Inquiry(this, false);" class="btn btn_d" style=" margin:0 0 0 10px; padding:9px 30px;">查詢 <i class="fa fa-caret-right"></i></a>
+                      </tr>									
+                    </table>   
+                    
+                    <div id="InquiryResule"></div>
+                    <!--/notabcontent-->
+                </div>
+            </div>
+            <!--/content-->
+            <!--gototop-->
+            <div class="gototop" style="position: fixed; bottom: 60px; display:none;">
+                <ul>
+                    <li><a href="javascript: goTop();">top</a>
+                    </li>
+                </ul>
+            </div>
+            <!--/gototop-->
+        </div>
+        <!--/contentContainer-->
+    </div>
+    <!--/wrapper-->
+
+    <!--footer-->
+    <footer>
+        <div class="footerContainer">c2015 President Chain Store Corporation. All rights reserved. │ <a href="./mobile/default.aspx?frompage=pc">手機版</a>
+        </div>
+    </footer>
+    <!--/footer-->
+
+<script language="javascript" type="text/javascript">
+    ajxSend_Retail_Inquiry_MappingLocate('台北市', 'COUNTY');
+</script>
+<iframe id="imitate_ajax" name="imitate_ajax" style="width:0px;height:0px;position:absolute;top:-100px;left:-100px;z-index:-100;background-color:Gray" scrolling="yes" frameborder="1"></iframe>
+</form>
+</body>
+
+</html>
+<script src="js/GoogleTrafficAnalysisTools.js"></script>
